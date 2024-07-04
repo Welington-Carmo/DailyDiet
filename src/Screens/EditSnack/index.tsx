@@ -13,6 +13,7 @@ import Loading from "@components/Loading";
 import { snacksGetAll } from "@storage/snack/snacksGetAll";
 import { snackRemove } from "@storage/snack/snackRemoveByKey";
 import { SnackCreate } from "@storage/snack/snackCreate";
+import { AppError } from "@utils/AppError";
 
 import { Container, Content, Row, Title } from "./styles";
 
@@ -115,7 +116,11 @@ export default function EditSnack() {
             await SnackCreate(snack);
             navigation.navigate('Snack', { key: newKey });
         } catch (error) {
-            console.error(error);
+            if (error instanceof AppError) {
+                Alert.alert('Editar Refeição', error.message);
+            } else {
+                Alert.alert('Editar Refeição', 'Não foi possível editar a refeição.');
+            }
         }
     }
 

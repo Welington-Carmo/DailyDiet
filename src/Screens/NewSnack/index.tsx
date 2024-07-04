@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { Alert, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import Input from "@components/Input";
 import InDietButton from '@components/InDietButton';
 import CardButton from '@components/CardButton';
 import GeneralHeader from "@components/GeneralHeader";
 
-import { Container, Content, Row, Title } from "./styles";
-import { useNavigation } from '@react-navigation/native';
 import { SnackCreate } from '@storage/snack/snackCreate';
+import { AppError } from '@utils/AppError';
+
+import { Container, Content, Row, Title } from "./styles";
 
 export default function NewSnack() {
     const [date, setDate] = useState('');
@@ -16,7 +18,7 @@ export default function NewSnack() {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [inDiet, setInDiet] = useState(true);
-    const snack = { name, description, date, inDiet, hour }
+    const snack = { name: name.trim(), description: description.trim(), date, inDiet, hour }
 
     const navigation = useNavigation();
 
@@ -77,7 +79,11 @@ export default function NewSnack() {
             await SnackCreate(snack);
             navigation.navigate('FeedBack', { inDiet })
         } catch (error) {
-            throw error;
+            if (error instanceof AppError) {
+                Alert.alert('Nova refeição', error.message);
+            } else {
+                Alert.alert('Nova refeição', 'Não foi possível cadastrar a refeição.');
+            }
         }
     }
 

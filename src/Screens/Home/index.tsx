@@ -19,7 +19,7 @@ export type dailyDietFormat = {
     description: string,
     hour: string,
     date: string,
-    inDiet: boolean
+    inDiet: boolean,
 }
 
 type Section = {
