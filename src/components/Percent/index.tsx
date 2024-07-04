@@ -15,7 +15,13 @@ type PercentProps = TouchableOpacityProps & {
 export default function Percent({ percent, arrowDirection = 'upRight', ...rest }: PercentProps) {
     const COLORS = theme.COLORS;
 
-    const percentText = `${percent.toFixed(2)}%`.split('.').join(',');
+    var percentText = '';
+    if (isFinite(percent)) {
+        percentText = percent < 100 ? percent.toFixed(2) : percent.toString().split('.').join(',');
+    } else {
+        percent = 0
+        percentText = '0';
+    }
     return (
         <Container
             style={{ backgroundColor: percent < 50 ? COLORS.RED_LIGHT : COLORS.GREEN_LIGHT }}
@@ -23,7 +29,7 @@ export default function Percent({ percent, arrowDirection = 'upRight', ...rest }
             <ContainerButton>
                 <ArrowButton {...rest} direction={arrowDirection} />
             </ContainerButton>
-            <Title>{percentText}</Title>
+            <Title>{percentText}%</Title>
             <SubTitle>das refeições dentro da dieta</SubTitle>
         </Container>
     );

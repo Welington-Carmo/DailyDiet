@@ -27,7 +27,7 @@ export default function Statistics() {
             const database: dailyDietFormat[] = await snacksGetAll();
 
             const inDietQuantity = database.filter(data => data.inDiet === true).length;
-            const calc = inDietQuantity * 100 / database.length;
+            var calc = (inDietQuantity * 100) / database.length;
 
             const groupedByDate = database.sort((a, b) => {
                 const [dayA, monthA, yearA] = a.date.split('/');
@@ -41,7 +41,6 @@ export default function Statistics() {
                 }
                 return dateB.localeCompare(dateA);
             });
-
             var maxSequence = 0;
             var x = 0;
             groupedByDate.forEach(item => {
