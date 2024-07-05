@@ -27,7 +27,7 @@ export default function Percent({ percent, arrowDirection = 'upRight', ...rest }
             style={{ backgroundColor: percent < 50 ? COLORS.RED_LIGHT : COLORS.GREEN_LIGHT }}
         >
             <ContainerButton>
-                <ArrowButton {...rest} direction={arrowDirection} />
+                <ArrowButton {...rest} direction={arrowDirection} color={percent < 50 ? 'SECONDARY' : 'PRIMARY'} />
             </ContainerButton>
             <Title>{percentText}%</Title>
             <SubTitle>das refeições dentro da dieta</SubTitle>
